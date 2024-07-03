@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript youtube</title>
+    <!-- <script src="index.js"></script> -->
+    <!-- <script src="/01. Basics/app.js"></script> -->
+    <!-- <script src="/02. control flow/controlflow.js"></script> -->
+    <script src="/03. Part B/Templatestrings.js"></script>
+
+    <style>
+        .navbar{
+            height: 80px; display: grid;
+            place-content: center;
+        }
+        .nav-links{
+            display: flex;
+            gap: 50px;
+        }
+        .nav-links li{ 
+            list-style-type:none;
+        }
+
+        .nav-links li a{
+            text-decoration: none;
+            color: black;
+            padding: 8px 15px; position: relative;
+        }
+
+        .nav-links li .active::before{
+            opacity: 1;
+        }
+        .nav-links li .active::after{
+            opacity: 1;
+        }
+        .nav-links li a::before{ 
+            content:'';
+            position: absolute;
+            left: 0; 
+            top: 0;
+            text-decoration: none;
+            color: #fff;
+            border-top: 2px solid #537fe7; 
+            border-left: 2px solid #537fe7; 
+            padding: 10px 8px;
+            transition: all ease 0.45; 
+            opacity: 0;
+            }
+        .nav-links li a::after{
+            content: '';
+            position: absolute;
+            right: 0; bottom: 0;
+            text-decoration: none;
+            color: #fff;
+            border-right: 2px solid #537fe7; 
+            border-bottom: 2px solid #537fe7; 
+            padding: 10px 8px;
+            transition: all ease 0.45; 
+            opacity: 0;
+        }
+        .nav-links li a:hover::before{ 
+            content: ' ';
+            position: absolute;
+            left: 0; 
+            top: 0;
+            text-decoration: none;
+            color: #fff;
+            border-top: 2px solid #537fe7; 
+            border-left: 2px solid #537fe7; 
+            padding: 10px 8px;
+            transform: scale (1.3);
+            opacity: 1;
+        }
+        .nav-links li a:hover::after{ 
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            text-decoration: none;
+            color: #fff;
+            border-right: 2px solid #537fe7;
+            border-bottom: 2px solid #537fe7;
+            padding: 10px 8px;
+            transform: scale (1.3);
+            opacity: 1;
+        }
+
+        #container{
+            background-color: #212228;
+            background-image: linear-gradient(#292a30 .1em, transparent .1em), linear-gradient(90deg, #292a30 .1em, transparent .1em);
+            background-size: 4em 4em;
+            height: 100vh;
+        }
+
+        #card{
+            width: 400px;
+            height: 400px;
+            background-color: #afda9f;
+            border-radius: 5px;
+            cursor: pointer;
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <ul class="nav-links sidebar">
+                <li onclick=hideSidebar()><a href="#home, #services"><ion-icon name="close"></ion-icon></a></li>
+                <li onclick=hideSidebar()><a href="#home">Home</a></li>
+                <li onclick=hideSidebar()><a href="#services">Shop</a></li>
+                <li onclick=hideSidebar()><a href="#brands">About us</a></li>
+                <li onclick=hideSidebar()><a href="#contact">Services</a></li>
+                <li onclick=hideSidebar()><a href="/login/login.html">Blog</a></li>
+                <li onclick=hideSidebar()><a href="/login/login.html">Contact us</a></li>
+        </ul>
+
+        <ul class="nav-links">
+            <li class="hideOnMobile"><a class="active" href="#home">Home</a></li>
+            <!-- <li class="hideOnMobile"><a href="#services">Shop</a></li> -->
+            <li class="hideOnMobile"><a href="#brands">About us</a></li>
+            <li class="hideOnMobile"><a href="#contact">Services</a></li>
+            <li class="hideOnMobile"><a href="/login/login.html">Contact us</a></li>
+        </ul>
+    </nav>
+
+    <div class="nav-links second">
+        <li onclick=hideSidebar()><a href="/login/login.html"><ion-icon name="person"></ion-icon></a></li>
+        <li onclick=hideSidebar()><a href="/login/login.html"><ion-icon name="cart"></ion-icon></a></li>
+        <li class="menu-button" onclick=showSidebar()><a href="#home, #services"><ion-icon name="menu"></ion-icon></a></li>                    
+    </div>
+    Hello fullstack JavaScript Youtube
+
+    <div id="container">
+        <div id="card"></div>
+    </div>
+
+    <script>
+        let newX = 0, newY = 0, startX = 0, startY = 0
+
+        const card = document.getElementById('card')
+
+        card.addEventListener('mousedown', mouseDown)
+
+        function mouseDown(e) {
+            startX = e.clientX
+            startY = e.clientY
+
+            document.addEventListener('mousemove', mouseMove)
+            document.addEventListener('mouseUp', mouseUp)
+        }
+
+        function mouseMove(e) {
+            newX = startX - e.clientX
+            newY = startY - e.clientY
+
+            startX = e.clientX
+            startY = e.clientY
+
+            card.style.top = (card.offsetTop - newY) + 'px'
+            card.style.left = (card.offsetLeft - newX)  + 'px'
+        }
+
+        function mouseUp(e) {
+            document.removeEventListener('mousemove', mouseMove)
+            document.removeEventListener('mouseUp', mouseUp)
+        }
+    </script>
+</body>
+</html>
